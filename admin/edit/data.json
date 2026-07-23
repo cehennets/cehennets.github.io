@@ -1,0 +1,21 @@
+{
+  "currently": {
+    "reading": "Blood Meridian",
+    "readingProgress": "84 / 337",
+    "watching": "",
+    "watchingProgress": "",
+    "music": "",
+    "activity": "Archery"
+  },
+  "profile": {
+    "rank": "Explorer",
+    "objective": "Develop physical skills"
+  },
+  "journal": [
+    {
+      "date": "2026-07-24",
+      "title": "Siteyi kurdum",
+      "text": "İlk sürüm hazır."
+    }
+  ]
+}
