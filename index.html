@@ -14,116 +14,224 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: #0d0d0f;
-      color: #e8e8e8;
-      font-family: "Courier New", monospace;
-      display: flex;
-      justify-content: center;
-      padding: 50px 22px;
+      overflow-x: hidden;
+      background:
+        linear-gradient(135deg, transparent 60%, #c90020 60% 66%, transparent 66%),
+        #080808;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.08;
+      background-image:
+        repeating-linear-gradient(
+          -35deg,
+          white 0,
+          white 1px,
+          transparent 1px,
+          transparent 12px
+        );
     }
 
     main {
-      width: 100%;
-      max-width: 620px;
+      width: min(900px, 100%);
+      margin: auto;
+      padding: 42px 22px 70px;
+      position: relative;
+    }
+
+    header {
+      position: relative;
+      margin-bottom: 45px;
+      transform: rotate(-2deg);
+    }
+
+    .name-shadow {
+      position: absolute;
+      top: 9px;
+      left: 8px;
+      color: #d50025;
+      font-size: clamp(58px, 17vw, 120px);
+      font-weight: 1000;
+      letter-spacing: -6px;
+      text-transform: uppercase;
+      z-index: -1;
     }
 
     h1 {
-      margin: 0 0 8px;
-      font-size: 34px;
-      font-weight: normal;
-      letter-spacing: 3px;
+      margin: 0;
+      font-size: clamp(58px, 17vw, 120px);
+      line-height: 0.85;
+      font-weight: 1000;
+      letter-spacing: -6px;
+      text-transform: uppercase;
+      -webkit-text-stroke: 2px white;
+      color: #080808;
     }
 
     .subtitle {
-      color: #777;
-      margin-bottom: 42px;
+      display: inline-block;
+      margin-top: 14px;
+      padding: 7px 15px;
+      background: white;
+      color: black;
+      font-weight: 900;
+      text-transform: uppercase;
+      transform: rotate(1deg);
+      box-shadow: 7px 7px 0 #d50025;
     }
 
-    h2 {
-      margin-top: 38px;
-      font-size: 15px;
-      color: #888;
+    .section-title {
+      display: inline-block;
+      margin: 22px 0 18px;
+      padding: 7px 15px;
+      background: #d50025;
+      color: white;
+      font-size: 18px;
+      font-weight: 1000;
       text-transform: uppercase;
-      letter-spacing: 2px;
-      font-weight: normal;
+      transform: rotate(-2deg);
+      box-shadow: 6px 6px 0 white;
     }
 
     .currently {
       display: grid;
-      gap: 10px;
-      margin-top: 18px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 13px;
+      margin-bottom: 36px;
     }
 
     .status {
-      padding: 14px 16px;
-      border: 1px solid #29292e;
-      background: #131316;
-      border-radius: 8px;
+      min-height: 82px;
+      padding: 17px;
+      background: #f4f4f4;
+      color: #080808;
+      border: 4px solid #080808;
+      font-size: 17px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transform: skew(-5deg);
+      box-shadow: 7px 7px 0 #d50025;
+    }
+
+    .status span {
+      display: block;
+      transform: skew(5deg);
     }
 
     nav {
-      margin-top: 18px;
       display: grid;
-      gap: 8px;
+      gap: 13px;
+      max-width: 600px;
     }
 
     nav a {
-      color: #e8e8e8;
+      position: relative;
+      display: block;
+      padding: 17px 22px;
+      background: white;
+      color: #080808;
+      border: 4px solid #080808;
+      font-size: 24px;
+      font-weight: 1000;
       text-decoration: none;
-      padding: 13px 16px;
-      border-left: 2px solid #333;
-      transition: 0.2s;
+      text-transform: uppercase;
+      transform: skew(-9deg);
+      box-shadow: 8px 8px 0 #d50025;
+      transition: 0.15s ease;
+    }
+
+    nav a span {
+      display: block;
+      transform: skew(9deg);
     }
 
     nav a::before {
-      content: "> ";
-      color: #777;
+      content: "▶";
+      margin-right: 12px;
+      color: #d50025;
     }
 
-    nav a:hover {
-      background: #17171b;
-      border-left-color: #e8e8e8;
-      padding-left: 22px;
+    nav a:hover,
+    nav a:active {
+      background: #d50025;
+      color: white;
+      transform: skew(-9deg) translateX(12px);
+      box-shadow: 8px 8px 0 white;
+    }
+
+    nav a:hover::before,
+    nav a:active::before {
+      color: white;
     }
 
     footer {
-      margin-top: 50px;
-      padding-top: 20px;
-      border-top: 1px solid #242429;
-      color: #555;
-      font-size: 12px;
+      margin-top: 55px;
+      font-weight: 900;
+      text-transform: uppercase;
+      transform: rotate(-1deg);
+    }
+
+    footer span {
+      background: white;
+      color: black;
+      padding: 6px 11px;
+    }
+
+    @media (max-width: 560px) {
+      main {
+        padding-top: 36px;
+      }
+
+      .currently {
+        grid-template-columns: 1fr;
+      }
+
+      nav a {
+        font-size: 20px;
+      }
     }
   </style>
 </head>
 
 <body>
   <main>
-    <h1>defne</h1>
-    <div class="subtitle">personal archive / character menu</div>
+    <header>
+      <div class="name-shadow">DEFNE</div>
+      <h1>DEFNE</h1>
+      <div class="subtitle">personal archive // character menu</div>
+    </header>
 
-    <h2>currently</h2>
+    <div class="section-title">currently</div>
 
     <section class="currently">
-      <div class="status">🏹 archery</div>
-      <div class="status">🏋️ cutting</div>
-      <div class="status">🎬 watching</div>
-      <div class="status">📚 reading</div>
+      <div class="status"><span>🏹 archery</span></div>
+      <div class="status"><span>🏋️ cutting</span></div>
+      <div class="status"><span>🎬 watching</span></div>
+      <div class="status"><span>📚 reading</span></div>
     </section>
 
-    <h2>menu</h2>
+    <div class="section-title">select</div>
 
     <nav>
-      <a href="#">journal</a>
-      <a href="#">gym</a>
-      <a href="#">skills</a>
-      <a href="#">films</a>
-      <a href="#">psychology</a>
-      <a href="#">gallery</a>
-      <a href="#">links</a>
+      <a href="#"><span>journal</span></a>
+      <a href="#"><span>gym</span></a>
+      <a href="#"><span>skills</span></a>
+      <a href="#"><span>films</span></a>
+      <a href="#"><span>psychology</span></a>
+      <a href="#"><span>gallery</span></a>
+      <a href="#"><span>links</span></a>
     </nav>
 
     <footer>
-      cehennets.github.io
+      <span>cehennets.github.io</span>
     </footer>
   </main>
 </body>
