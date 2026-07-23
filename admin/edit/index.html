@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Site Editörü</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 24px;
+      background: #080808;
+      color: #f4f1eb;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    main {
+      width: min(700px, 100%);
+      margin: auto;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 48px;
+      text-transform: uppercase;
+      color: #f4f1eb;
+      text-shadow: 5px 5px 0 #d40028;
+    }
+
+    .description {
+      margin-bottom: 30px;
+      color: #aaa;
+      line-height: 1.5;
+    }
+
+    section {
+      margin-bottom: 24px;
+      padding: 22px;
+      background: #f4f1eb;
+      color: #080808;
+      border: 4px solid #080808;
+      box-shadow: 8px 8px 0 #d40028;
+    }
+
+    h2 {
+      margin-top: 0;
+      text-transform: uppercase;
+    }
+
+    label {
+      display: block;
+      margin: 18px 0 7px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      border: 3px solid #080808;
+      background: white;
+      color: #080808;
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      padding: 17px;
+      border: 4px solid #080808;
+      background: #d40028;
+      color: white;
+      font-size: 18px;
+      font-weight: 1000;
+      text-transform: uppercase;
+      box-shadow: 8px 8px 0 #f4f1eb;
+      cursor: pointer;
+    }
+
+    button:active {
+      transform: translate(4px, 4px);
+      box-shadow: 4px 4px 0 #f4f1eb;
+    }
+
+    #status {
+      margin-top: 20px;
+      text-align: center;
+      color: #aaa;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>Edit Mode</h1>
+
+    <p class="description">
+      Bilgileri değiştir ve aşağıdaki butona bas. Sana güncel
+      <strong>data.json</strong> dosyasını verecek.
+    </p>
+
+    <section>
+      <h2>Currently</h2>
+
+      <label for="reading">Okuduğum kitap</label>
+      <input id="reading" type="text" placeholder="Blood Meridian">
+
+      <label for="readingProgress">Kitap ilerlemesi</label>
+      <input id="readingProgress" type="text" placeholder="84 / 337">
+
+      <label for="watching">İzlediğim şey</label>
+      <input id="watching" type="text" placeholder="Monster">
+
+      <label for="watchingProgress">İzleme ilerlemesi</label>
+      <input id="watchingProgress" type="text" placeholder="23 / 74">
+
+      <label for="music">Dinlediğim şey</label>
+      <input id="music" type="text" placeholder="KMFDM">
+
+      <label for="activity">Şu anki aktivite</label>
+      <input id="activity" type="text" placeholder="Archery">
+    </section>
+
+    <section>
+      <h2>Yeni günlük yazısı</h2>
+
+      <label for="journalDate">Tarih</label>
+      <input id="journalDate" type="date">
+
+      <label for="journalTitle">Başlık</label>
+      <input id="journalTitle" type="text" placeholder="siteyi güncelledim">
+
+      <label for="journalText">Yazı</label>
+      <textarea id="journalText" placeholder="bugün..."></textarea>
+    </section>
+
+    <section>
+      <h2>Profil</h2>
+
+      <label for="rank">Rank</label>
+      <input id="rank" type="text" placeholder="Explorer">
+
+      <label for="objective">Ana hedef</label>
+      <input id="objective" type="text" placeholder="develop physical skills">
+    </section>
+
+    <button id="downloadButton">data.json indir</button>
+
+    <p id="status"></p>
+  </main>
+
+  <script>
+    const fields = [
+      "reading",
+      "readingProgress",
+      "watching",
+      "watchingProgress",
+      "music",
+      "activity",
+      "journalDate",
+      "journalTitle",
+      "journalText",
+      "rank",
+      "objective"
+    ];
+
+    function saveToBrowser() {
+      const savedData = {};
+
+      fields.forEach((field) => {
+        savedData[field] = document.getElementById(field).value;
+      });
+
+      localStorage.setItem("defneEditorData", JSON.stringify(savedData));
+    }
+
+    function loadFromBrowser() {
+      const savedData = localStorage.getItem("defneEditorData");
+
+      if (!savedData) return;
+
+      try {
+        const parsedData = JSON.parse(savedData);
+
+        fields.forEach((field) => {
+          if (parsedData[field] !== undefined) {
+            document.getElementById(field).value = parsedData[field];
+          }
+        });
+      } catch (error) {
+        console.error("Kayıt okunamadı:", error);
+      }
+    }
+
+    fields.forEach((field) => {
+      document.getElementById(field).addEventListener("input", saveToBrowser);
+    });
+
+    document
+      .getElementById("downloadButton")
+      .addEventListener("click", () => {
+        const data = {
+          currently: {
+            reading: document.getElementById("reading").value,
+            readingProgress:
+              document.getElementById("readingProgress").value,
+            watching: document.getElementById("watching").value,
+            watchingProgress:
+              document.getElementById("watchingProgress").value,
+            music: document.getElementById("music").value,
+            activity: document.getElementById("activity").value
+          },
+
+          profile: {
+            rank: document.getElementById("rank").value,
+            objective: document.getElementById("objective").value
+          },
+
+          journal: [
+            {
+              date: document.getElementById("journalDate").value,
+              title: document.getElementById("journalTitle").value,
+              text: document.getElementById("journalText").value
+            }
+          ]
+        };
+
+        const fileContent = JSON.stringify(data, null, 2);
+        const blob = new Blob([fileContent], {
+          type: "application/json"
+        });
+
+        const downloadLink = document.createElement("a");
+
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = "data.json";
+        downloadLink.click();
+
+        URL.revokeObjectURL(downloadLink.href);
+
+        document.getElementById("status").textContent =
+          "data.json hazırlandı ✓";
+      });
+
+    loadFromBrowser();
+  </script>
+</body>
+</html>
