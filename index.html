@@ -11,13 +11,29 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --red: #d50025;
+      --black: #080808;
+      --white: #f5f5f5;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       min-height: 100vh;
       overflow-x: hidden;
       background:
-        linear-gradient(135deg, transparent 60%, #c90020 60% 66%, transparent 66%),
-        #080808;
+        linear-gradient(
+          135deg,
+          transparent 60%,
+          rgba(213, 0, 37, 0.8) 60%,
+          rgba(213, 0, 37, 0.8) 66%,
+          transparent 66%
+        ),
+        var(--black);
       color: white;
       font-family: Arial, Helvetica, sans-serif;
     }
@@ -27,7 +43,7 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      opacity: 0.08;
+      opacity: 0.07;
       background-image:
         repeating-linear-gradient(
           -35deg,
@@ -38,11 +54,37 @@
         );
     }
 
+    button {
+      font: inherit;
+    }
+
     main {
       width: min(900px, 100%);
       margin: auto;
       padding: 42px 22px 70px;
       position: relative;
+      z-index: 1;
+    }
+
+    .screen {
+      display: none;
+      animation: enter 0.25s ease;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    @keyframes enter {
+      from {
+        opacity: 0;
+        transform: translateX(20px) rotate(0.5deg);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0) rotate(0);
+      }
     }
 
     header {
@@ -55,7 +97,7 @@
       position: absolute;
       top: 9px;
       left: 8px;
-      color: #d50025;
+      color: var(--red);
       font-size: clamp(58px, 17vw, 120px);
       font-weight: 1000;
       letter-spacing: -6px;
@@ -71,7 +113,20 @@
       letter-spacing: -6px;
       text-transform: uppercase;
       -webkit-text-stroke: 2px white;
-      color: #080808;
+      color: var(--black);
+    }
+
+    .page-title {
+      margin: 0 0 35px;
+      font-size: clamp(50px, 14vw, 95px);
+      line-height: 0.85;
+      font-weight: 1000;
+      letter-spacing: -5px;
+      text-transform: uppercase;
+      color: var(--black);
+      -webkit-text-stroke: 2px white;
+      text-shadow: 8px 8px var(--red);
+      transform: rotate(-2deg);
     }
 
     .subtitle {
@@ -83,14 +138,14 @@
       font-weight: 900;
       text-transform: uppercase;
       transform: rotate(1deg);
-      box-shadow: 7px 7px 0 #d50025;
+      box-shadow: 7px 7px 0 var(--red);
     }
 
     .section-title {
       display: inline-block;
       margin: 22px 0 18px;
       padding: 7px 15px;
-      background: #d50025;
+      background: var(--red);
       color: white;
       font-size: 18px;
       font-weight: 1000;
@@ -109,16 +164,16 @@
     .status {
       min-height: 82px;
       padding: 17px;
-      background: #f4f4f4;
-      color: #080808;
-      border: 4px solid #080808;
+      background: var(--white);
+      color: var(--black);
+      border: 4px solid var(--black);
       font-size: 17px;
       font-weight: 900;
       display: flex;
       align-items: center;
       gap: 12px;
       transform: skew(-5deg);
-      box-shadow: 7px 7px 0 #d50025;
+      box-shadow: 7px 7px 0 var(--red);
     }
 
     .status span {
@@ -129,47 +184,180 @@
     nav {
       display: grid;
       gap: 13px;
-      max-width: 600px;
+      max-width: 620px;
     }
 
-    nav a {
+    .menu-button {
       position: relative;
+      width: 100%;
       display: block;
       padding: 17px 22px;
       background: white;
-      color: #080808;
-      border: 4px solid #080808;
+      color: var(--black);
+      border: 4px solid var(--black);
       font-size: 24px;
       font-weight: 1000;
-      text-decoration: none;
+      text-align: left;
       text-transform: uppercase;
+      cursor: pointer;
       transform: skew(-9deg);
-      box-shadow: 8px 8px 0 #d50025;
+      box-shadow: 8px 8px 0 var(--red);
       transition: 0.15s ease;
     }
 
-    nav a span {
+    .menu-button span {
       display: block;
       transform: skew(9deg);
     }
 
-    nav a::before {
+    .menu-button span::before {
       content: "▶";
       margin-right: 12px;
-      color: #d50025;
+      color: var(--red);
     }
 
-    nav a:hover,
-    nav a:active {
-      background: #d50025;
+    .menu-button:hover,
+    .menu-button:active {
+      background: var(--red);
       color: white;
-      transform: skew(-9deg) translateX(12px);
+      transform: skew(-9deg) translateX(10px);
       box-shadow: 8px 8px 0 white;
     }
 
-    nav a:hover::before,
-    nav a:active::before {
+    .menu-button:hover span::before,
+    .menu-button:active span::before {
       color: white;
+    }
+
+    .back-button {
+      display: inline-block;
+      margin: 10px 0 35px;
+      padding: 12px 18px;
+      border: 3px solid black;
+      background: white;
+      color: black;
+      font-weight: 1000;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 6px 6px var(--red);
+      transform: skew(-7deg);
+    }
+
+    .back-button span {
+      display: block;
+      transform: skew(7deg);
+    }
+
+    .card-list {
+      display: grid;
+      gap: 20px;
+    }
+
+    .card {
+      padding: 22px;
+      background: white;
+      color: black;
+      border: 4px solid black;
+      box-shadow: 8px 8px var(--red);
+      transform: skew(-2deg);
+    }
+
+    .card-content {
+      transform: skew(2deg);
+    }
+
+    .card h2,
+    .card h3 {
+      margin-top: 0;
+      text-transform: uppercase;
+    }
+
+    .tag {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 5px 10px;
+      background: var(--red);
+      color: white;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .skill {
+      margin-bottom: 24px;
+    }
+
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .bar {
+      height: 18px;
+      background: #d7d7d7;
+      border: 3px solid black;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: var(--red);
+    }
+
+    .film-grid,
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 17px;
+    }
+
+    .film,
+    .gallery-item {
+      min-height: 155px;
+      padding: 20px;
+      background: white;
+      color: black;
+      border: 4px solid black;
+      box-shadow: 7px 7px var(--red);
+      font-weight: 900;
+      text-transform: uppercase;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .gallery-item {
+      justify-content: center;
+      align-items: center;
+      font-size: 36px;
+    }
+
+    .link-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .external-link {
+      display: block;
+      padding: 17px;
+      background: white;
+      color: black;
+      border: 4px solid black;
+      box-shadow: 7px 7px var(--red);
+      font-weight: 1000;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: 0.15s ease;
+    }
+
+    .external-link:hover,
+    .external-link:active {
+      background: var(--red);
+      color: white;
+      transform: translateX(8px);
+      box-shadow: 7px 7px white;
     }
 
     footer {
@@ -187,15 +375,21 @@
 
     @media (max-width: 560px) {
       main {
-        padding-top: 36px;
+        padding-top: 34px;
       }
 
-      .currently {
+      .currently,
+      .film-grid,
+      .gallery-grid {
         grid-template-columns: 1fr;
       }
 
-      nav a {
+      .menu-button {
         font-size: 20px;
+      }
+
+      .page-title {
+        font-size: 52px;
       }
     }
   </style>
@@ -203,36 +397,329 @@
 
 <body>
   <main>
-    <header>
-      <div class="name-shadow">DEFNE</div>
-      <h1>DEFNE</h1>
-      <div class="subtitle">personal archive // character menu</div>
-    </header>
 
-    <div class="section-title">currently</div>
+    <!-- ANA MENÜ -->
 
-    <section class="currently">
-      <div class="status"><span>🏹 archery</span></div>
-      <div class="status"><span>🏋️ cutting</span></div>
-      <div class="status"><span>🎬 watching</span></div>
-      <div class="status"><span>📚 reading</span></div>
+    <section id="home" class="screen active">
+      <header>
+        <div class="name-shadow">DEFNE</div>
+        <h1>DEFNE</h1>
+        <div class="subtitle">personal archive // character menu</div>
+      </header>
+
+      <div class="section-title">currently</div>
+
+      <section class="currently">
+        <div class="status"><span>🏹 archery</span></div>
+        <div class="status"><span>🏋️ cutting</span></div>
+        <div class="status"><span>🎬 watching</span></div>
+        <div class="status"><span>📚 reading</span></div>
+      </section>
+
+      <div class="section-title">select</div>
+
+      <nav>
+        <button class="menu-button" data-screen="journal">
+          <span>journal</span>
+        </button>
+
+        <button class="menu-button" data-screen="gym">
+          <span>gym</span>
+        </button>
+
+        <button class="menu-button" data-screen="skills">
+          <span>skills</span>
+        </button>
+
+        <button class="menu-button" data-screen="films">
+          <span>films</span>
+        </button>
+
+        <button class="menu-button" data-screen="psychology">
+          <span>psychology</span>
+        </button>
+
+        <button class="menu-button" data-screen="gallery">
+          <span>gallery</span>
+        </button>
+
+        <button class="menu-button" data-screen="links">
+          <span>links</span>
+        </button>
+      </nav>
+
+      <footer>
+        <span>cehennets.github.io</span>
+      </footer>
     </section>
 
-    <div class="section-title">select</div>
+    <!-- JOURNAL -->
 
-    <nav>
-      <a href="#"><span>journal</span></a>
-      <a href="#"><span>gym</span></a>
-      <a href="#"><span>skills</span></a>
-      <a href="#"><span>films</span></a>
-      <a href="#"><span>psychology</span></a>
-      <a href="#"><span>gallery</span></a>
-      <a href="#"><span>links</span></a>
-    </nav>
+    <section id="journal" class="screen">
+      <button class="back-button">
+        <span>← ana menü</span>
+      </button>
 
-    <footer>
-      <span>cehennets.github.io</span>
-    </footer>
+      <h1 class="page-title">journal</h1>
+
+      <div class="card-list">
+        <article class="card">
+          <div class="card-content">
+            <div class="tag">24.07.2026</div>
+            <p>siteyi kurmaya başladım</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-content">
+            <div class="tag">23.07.2026</div>
+            <p>buraya istediğim şeyleri yazacağım</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- GYM -->
+
+    <section id="gym" class="screen">
+      <button class="back-button">
+        <span>← ana menü</span>
+      </button>
+
+      <h1 class="page-title">gym</h1>
+
+      <div class="card-list">
+        <article class="card">
+          <div class="card-content">
+            <div class="tag">current mission</div>
+            <h2>cutting</h2>
+            <p>hedeflerimi, antrenman programımı ve gelişimimi burada tutacağım</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-content">
+            <h3>weekly training</h3>
+            <p>day 1 — upper</p>
+            <p>day 2 — lower</p>
+            <p>day 3 — upper</p>
+            <p>day 4 — lower</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+
+    <section id="skills" class="screen">
+      <button class="back-button">
+        <span>← ana menü</span>
+      </button>
+
+      <h1 class="page-title">skills</h1>
+
+      <article class="card">
+        <div class="card-content">
+
+          <div class="skill">
+            <div class="skill-header">
+              <span>archery</span>
+              <span>lv. 4</span>
+            </div>
+            <div class="bar">
+              <div class="bar-fill" style="width: 40%;"></div>
+            </div>
+          </div>
+
+          <div class="skill">
+            <div class="skill-header">
+              <span>fitness</span>
+              <span>lv. 6</span>
+            </div>
+            <div class="bar">
+              <div class="bar-fill" style="width: 60%;"></div>
+            </div>
+          </div>
+
+          <div class="skill">
+            <div class="skill-header">
+              <span>psychology</span>
+              <span>lv. 7</span>
+            </div>
+            <div class="bar">
+              <div class="bar-fill" style="width: 70%;"></div>
+            </div>
+          </div>
+
+          <div class="skill">
+            <div class="skill-header">
+              <span>spss</span>
+              <span>lv. 1</span>
+            </div>
+            <div class="bar">
+              <div class="bar-fill" style="width: 10%;"></div>
+            </div>
+          </div>
+
+          <div class="skill">
+            <div class="skill-header">
+              <span>excel</span>
+              <span>lv. 1</span>
+            </div>
+            <div class="bar">
+              <div class="bar-fill" style="width: 15%;"></div>
+            </div>
+          </div>
+
+        </div>
+      </article>
+    </section>
+
+    <!-- FILMS -->
+
+    <section id="films" class="screen">
+      <button class="back-button">
+        <span>← ana menü</span>
+      </button>
+
+      <h1 class="page-title">films</h1>
+
+      <div class="film-grid">
+        <article class="film">
+          <span>currently watching</span>
+          <h2>monster</h2>
+        </article>
+
+        <article class="film">
+          <span>recently watched</span>
+          <h2>film title</h2>
+        </article>
+
+        <article class="film">
+          <span>watchlist</span>
+          <h2>perfect blue</h2>
+        </article>
+
+        <article class="film">
+          <span>watchlist</span>
+          <h2>memories of murder</h2>
+        </article>
+      </div>
+    </section>
+
+    <!-- PSYCHOLOGY -->
+
+    <section id="psychology" class="screen">
+      <button class="back-button">
+        <span>← ana menü</span>
+      </button>
+
+      <h1 class="page-title">psychology</h1>
+
+      <div class="card-list">
+        <article class="card">
+          <div class="card-content">
+            <div class="tag">area of interest</div>
+            <h2>industrial psychology</h2>
+            <p>notlar, araştırmalar ve kariyer fikirleri</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-content">
+            <div class="tag">study archive</div>
+            <h2>university</h2>
+            <p>ders notları, projeler ve öğrendiğim şeyler</p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-content">
+            <div class="tag">research</div>
+            <h2>topics</h2>
+            <p>ilgimi çeken psikoloji konuları burada olacak</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+
+    <section id="gallery" class="screen">
+      <button class="back-button">
+        <span>← ana menü</span>
+      </button>
+
+      <h1 class="page-title">gallery</h1>
+
+      <div class="gallery-grid">
+        <div class="gallery-item">📷</div>
+        <div class="gallery-item">🏹</div>
+        <div class="gallery-item">🎬</div>
+        <div class="gallery-item">🖤</div>
+      </div>
+    </section>
+
+    <!-- LINKS -->
+
+    <section id="links" class="screen">
+      <button class="back-button">
+        <span>← ana menü</span>
+      </button>
+
+      <h1 class="page-title">links</h1>
+
+      <div class="link-list">
+        <a class="external-link" href="#" target="_blank">
+          letterboxd
+        </a>
+
+        <a class="external-link" href="#" target="_blank">
+          linkedin
+        </a>
+
+        <a class="external-link" href="#" target="_blank">
+          tumblr
+        </a>
+
+        <a class="external-link" href="#" target="_blank">
+          instagram
+        </a>
+      </div>
+    </section>
+
   </main>
+
+  <script>
+    const screens = document.querySelectorAll(".screen");
+    const menuButtons = document.querySelectorAll("[data-screen]");
+    const backButtons = document.querySelectorAll(".back-button");
+
+    function openScreen(screenId) {
+      screens.forEach((screen) => {
+        screen.classList.remove("active");
+      });
+
+      const selectedScreen = document.getElementById(screenId);
+
+      if (selectedScreen) {
+        selectedScreen.classList.add("active");
+        window.scrollTo(0, 0);
+      }
+    }
+
+    menuButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        openScreen(button.dataset.screen);
+      });
+    });
+
+    backButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        openScreen("home");
+      });
+    });
+  </script>
+
 </body>
 </html>
