@@ -7,14 +7,15 @@
   <title>defne</title>
 
   <style>
-    * {
-      box-sizing: border-box;
+    :root {
+      --red: #d40028;
+      --black: #080808;
+      --white: #f4f1eb;
+      --grey: #a7a7a7;
     }
 
-    :root {
-      --red: #d50025;
-      --black: #080808;
-      --white: #f5f5f5;
+    * {
+      box-sizing: border-box;
     }
 
     html {
@@ -25,16 +26,8 @@
       margin: 0;
       min-height: 100vh;
       overflow-x: hidden;
-      background:
-        linear-gradient(
-          135deg,
-          transparent 60%,
-          rgba(213, 0, 37, 0.8) 60%,
-          rgba(213, 0, 37, 0.8) 66%,
-          transparent 66%
-        ),
-        var(--black);
-      color: white;
+      background: var(--black);
+      color: var(--white);
       font-family: Arial, Helvetica, sans-serif;
     }
 
@@ -42,172 +35,194 @@
       content: "";
       position: fixed;
       inset: 0;
-      pointer-events: none;
-      opacity: 0.07;
-      background-image:
+      z-index: -3;
+      background:
+        linear-gradient(
+          125deg,
+          transparent 0 68%,
+          rgba(212, 0, 40, 0.8) 68% 74%,
+          transparent 74%
+        ),
         repeating-linear-gradient(
           -35deg,
-          white 0,
-          white 1px,
-          transparent 1px,
-          transparent 12px
+          rgba(255, 255, 255, 0.035) 0 1px,
+          transparent 1px 13px
         );
     }
 
-    button {
+    body::after {
+      content: "";
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      top: -150px;
+      right: -100px;
+      z-index: -2;
+      background: var(--red);
+      transform: rotate(35deg);
+      animation: drift 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes drift {
+      from {
+        transform: rotate(30deg) translate(0, 0);
+      }
+
+      to {
+        transform: rotate(40deg) translate(-30px, 35px);
+      }
+    }
+
+    button,
+    a {
       font: inherit;
     }
 
-    main {
-      width: min(900px, 100%);
-      margin: auto;
-      padding: 42px 22px 70px;
-      position: relative;
-      z-index: 1;
+    button {
+      cursor: pointer;
     }
 
     .screen {
       display: none;
-      animation: enter 0.25s ease;
+      width: min(940px, 100%);
+      margin: auto;
+      padding: 34px 20px 70px;
+      animation: screen-enter 0.32s ease;
     }
 
     .screen.active {
       display: block;
     }
 
-    @keyframes enter {
+    @keyframes screen-enter {
       from {
         opacity: 0;
-        transform: translateX(20px) rotate(0.5deg);
+        transform: translateX(35px) skew(-1deg);
       }
 
       to {
         opacity: 1;
-        transform: translateX(0) rotate(0);
+        transform: translateX(0);
       }
     }
 
-    header {
+    /* ANA EKRAN */
+
+    .hero {
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .name-wrap {
       position: relative;
-      margin-bottom: 45px;
-      transform: rotate(-2deg);
+      transform: rotate(-3deg);
+      margin-bottom: 22px;
     }
 
     .name-shadow {
       position: absolute;
-      top: 9px;
-      left: 8px;
-      color: var(--red);
-      font-size: clamp(58px, 17vw, 120px);
-      font-weight: 1000;
-      letter-spacing: -6px;
-      text-transform: uppercase;
+      left: 10px;
+      top: 10px;
       z-index: -1;
+      color: var(--red);
+      font-size: clamp(70px, 20vw, 155px);
+      line-height: 0.78;
+      font-weight: 1000;
+      letter-spacing: -9px;
+      text-transform: uppercase;
     }
 
-    h1 {
+    .name {
       margin: 0;
-      font-size: clamp(58px, 17vw, 120px);
-      line-height: 0.85;
-      font-weight: 1000;
-      letter-spacing: -6px;
-      text-transform: uppercase;
-      -webkit-text-stroke: 2px white;
       color: var(--black);
+      font-size: clamp(70px, 20vw, 155px);
+      line-height: 0.78;
+      font-weight: 1000;
+      letter-spacing: -9px;
+      text-transform: uppercase;
+      -webkit-text-stroke: 3px var(--white);
     }
 
-    .page-title {
-      margin: 0 0 35px;
-      font-size: clamp(50px, 14vw, 95px);
-      line-height: 0.85;
-      font-weight: 1000;
-      letter-spacing: -5px;
-      text-transform: uppercase;
-      color: var(--black);
-      -webkit-text-stroke: 2px white;
-      text-shadow: 8px 8px var(--red);
-      transform: rotate(-2deg);
-    }
-
-    .subtitle {
+    .identity {
       display: inline-block;
-      margin-top: 14px;
-      padding: 7px 15px;
-      background: white;
-      color: black;
-      font-weight: 900;
+      width: fit-content;
+      margin-top: 18px;
+      padding: 8px 14px;
+      background: var(--white);
+      color: var(--black);
+      font-weight: 1000;
       text-transform: uppercase;
+      box-shadow: 8px 8px 0 var(--red);
       transform: rotate(1deg);
-      box-shadow: 7px 7px 0 var(--red);
     }
 
-    .section-title {
+    .currently-title,
+    .menu-title {
       display: inline-block;
-      margin: 22px 0 18px;
-      padding: 7px 15px;
+      width: fit-content;
+      margin: 28px 0 18px;
+      padding: 7px 14px;
       background: var(--red);
       color: white;
       font-size: 18px;
       font-weight: 1000;
       text-transform: uppercase;
-      transform: rotate(-2deg);
       box-shadow: 6px 6px 0 white;
+      transform: rotate(-2deg);
     }
 
-    .currently {
+    .currently-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 13px;
-      margin-bottom: 36px;
+      margin-bottom: 26px;
     }
 
-    .status {
-      min-height: 82px;
+    .current-card {
+      min-height: 80px;
       padding: 17px;
       background: var(--white);
       color: var(--black);
       border: 4px solid var(--black);
-      font-size: 17px;
-      font-weight: 900;
+      box-shadow: 7px 7px 0 var(--red);
+      transform: skew(-5deg);
       display: flex;
       align-items: center;
-      gap: 12px;
-      transform: skew(-5deg);
-      box-shadow: 7px 7px 0 var(--red);
+      font-size: 17px;
+      font-weight: 1000;
     }
 
-    .status span {
+    .current-card span {
       display: block;
       transform: skew(5deg);
     }
 
-    nav {
+    .menu {
       display: grid;
-      gap: 13px;
-      max-width: 620px;
+      gap: 12px;
+      max-width: 650px;
     }
 
     .menu-button {
-      position: relative;
       width: 100%;
-      display: block;
-      padding: 17px 22px;
-      background: white;
-      color: var(--black);
+      padding: 15px 20px;
       border: 4px solid var(--black);
-      font-size: 24px;
-      font-weight: 1000;
+      background: var(--white);
+      color: var(--black);
       text-align: left;
+      font-size: 22px;
+      font-weight: 1000;
       text-transform: uppercase;
-      cursor: pointer;
-      transform: skew(-9deg);
       box-shadow: 8px 8px 0 var(--red);
+      transform: skew(-8deg);
       transition: 0.15s ease;
     }
 
     .menu-button span {
       display: block;
-      transform: skew(9deg);
+      transform: skew(8deg);
     }
 
     .menu-button span::before {
@@ -220,8 +235,8 @@
     .menu-button:active {
       background: var(--red);
       color: white;
-      transform: skew(-9deg) translateX(10px);
       box-shadow: 8px 8px 0 white;
+      transform: skew(-8deg) translateX(10px);
     }
 
     .menu-button:hover span::before,
@@ -229,17 +244,24 @@
       color: white;
     }
 
+    /* İÇ SAYFALAR */
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 38px;
+    }
+
     .back-button {
-      display: inline-block;
-      margin: 10px 0 35px;
-      padding: 12px 18px;
-      border: 3px solid black;
-      background: white;
-      color: black;
+      padding: 10px 16px;
+      border: 3px solid var(--black);
+      background: var(--white);
+      color: var(--black);
       font-weight: 1000;
       text-transform: uppercase;
-      cursor: pointer;
-      box-shadow: 6px 6px var(--red);
+      box-shadow: 6px 6px 0 var(--red);
       transform: skew(-7deg);
     }
 
@@ -248,475 +270,592 @@
       transform: skew(7deg);
     }
 
-    .card-list {
+    .page-number {
+      color: var(--grey);
+      font-weight: 900;
+    }
+
+    .page-title {
+      margin: 0 0 38px;
+      color: var(--black);
+      font-size: clamp(55px, 15vw, 110px);
+      line-height: 0.8;
+      font-weight: 1000;
+      letter-spacing: -6px;
+      text-transform: uppercase;
+      -webkit-text-stroke: 2px var(--white);
+      text-shadow: 8px 8px 0 var(--red);
+      transform: rotate(-2deg);
+    }
+
+    .cards {
       display: grid;
       gap: 20px;
     }
 
     .card {
       padding: 22px;
-      background: white;
-      color: black;
-      border: 4px solid black;
-      box-shadow: 8px 8px var(--red);
+      border: 4px solid var(--black);
+      background: var(--white);
+      color: var(--black);
+      box-shadow: 8px 8px 0 var(--red);
       transform: skew(-2deg);
     }
 
-    .card-content {
+    .card-inner {
       transform: skew(2deg);
     }
 
     .card h2,
     .card h3 {
-      margin-top: 0;
+      margin: 0 0 12px;
       text-transform: uppercase;
+    }
+
+    .card p {
+      line-height: 1.55;
     }
 
     .tag {
       display: inline-block;
-      margin-bottom: 10px;
+      margin-bottom: 13px;
       padding: 5px 10px;
       background: var(--red);
       color: white;
+      font-size: 13px;
+      font-weight: 1000;
+      text-transform: uppercase;
+    }
+
+    /* PROFILE */
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .stat {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 12px 0;
+      border-bottom: 2px solid var(--black);
       font-weight: 900;
       text-transform: uppercase;
     }
+
+    /* JOURNAL */
+
+    .date {
+      font-size: 14px;
+      font-weight: 1000;
+      text-transform: uppercase;
+    }
+
+    /* SKILLS */
 
     .skill {
       margin-bottom: 24px;
     }
 
-    .skill-header {
+    .skill:last-child {
+      margin-bottom: 0;
+    }
+
+    .skill-top {
       display: flex;
       justify-content: space-between;
-      gap: 10px;
+      gap: 15px;
       margin-bottom: 8px;
-      font-weight: 900;
+      font-weight: 1000;
       text-transform: uppercase;
     }
 
     .bar {
-      height: 18px;
-      background: #d7d7d7;
-      border: 3px solid black;
+      height: 20px;
+      border: 3px solid var(--black);
+      background: #cecece;
+      overflow: hidden;
     }
 
     .bar-fill {
       height: 100%;
       background: var(--red);
+      animation: fill 1s ease;
     }
 
-    .film-grid,
+    @keyframes fill {
+      from {
+        width: 0;
+      }
+    }
+
+    /* LIBRARY */
+
+    .library-grid,
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 17px;
+      gap: 18px;
     }
 
-    .film,
-    .gallery-item {
-      min-height: 155px;
+    .library-item {
+      min-height: 170px;
       padding: 20px;
-      background: white;
-      color: black;
-      border: 4px solid black;
-      box-shadow: 7px 7px var(--red);
-      font-weight: 900;
-      text-transform: uppercase;
+      border: 4px solid var(--black);
+      background: var(--white);
+      color: var(--black);
+      box-shadow: 7px 7px 0 var(--red);
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
+      text-transform: uppercase;
     }
+
+    .library-item small {
+      margin-bottom: 8px;
+      color: #555;
+      font-weight: 900;
+    }
+
+    .library-item h2 {
+      margin: 0;
+    }
+
+    /* GALLERY */
 
     .gallery-item {
+      aspect-ratio: 1 / 1;
+      border: 4px solid var(--black);
+      background: var(--white);
+      color: var(--black);
+      box-shadow: 7px 7px 0 var(--red);
+      display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 36px;
+      font-size: 45px;
     }
 
-    .link-list {
+    /* LINKS */
+
+    .links {
       display: grid;
-      gap: 14px;
+      gap: 15px;
     }
 
-    .external-link {
+    .link {
       display: block;
-      padding: 17px;
-      background: white;
-      color: black;
-      border: 4px solid black;
-      box-shadow: 7px 7px var(--red);
+      padding: 17px 20px;
+      border: 4px solid var(--black);
+      background: var(--white);
+      color: var(--black);
+      box-shadow: 7px 7px 0 var(--red);
+      font-size: 19px;
       font-weight: 1000;
       text-decoration: none;
       text-transform: uppercase;
       transition: 0.15s ease;
     }
 
-    .external-link:hover,
-    .external-link:active {
+    .link::before {
+      content: "↗";
+      margin-right: 12px;
+      color: var(--red);
+    }
+
+    .link:hover,
+    .link:active {
       background: var(--red);
       color: white;
       transform: translateX(8px);
-      box-shadow: 7px 7px white;
+      box-shadow: 7px 7px 0 white;
     }
 
     footer {
-      margin-top: 55px;
+      margin-top: 50px;
+      color: #777;
+      font-size: 12px;
       font-weight: 900;
       text-transform: uppercase;
-      transform: rotate(-1deg);
     }
 
-    footer span {
-      background: white;
-      color: black;
-      padding: 6px 11px;
-    }
-
-    @media (max-width: 560px) {
-      main {
-        padding-top: 34px;
+    @media (max-width: 600px) {
+      .screen {
+        padding-top: 28px;
       }
 
-      .currently,
-      .film-grid,
+      .hero {
+        min-height: auto;
+      }
+
+      .currently-grid,
+      .profile-grid,
+      .library-grid,
       .gallery-grid {
         grid-template-columns: 1fr;
       }
 
+      .name,
+      .name-shadow {
+        letter-spacing: -5px;
+      }
+
       .menu-button {
-        font-size: 20px;
+        font-size: 19px;
       }
 
       .page-title {
-        font-size: 52px;
+        font-size: 55px;
+        letter-spacing: -3px;
       }
     }
   </style>
 </head>
 
 <body>
-  <main>
 
-    <!-- ANA MENÜ -->
+  <!-- ANA MENÜ -->
 
-    <section id="home" class="screen active">
-      <header>
+  <main id="home" class="screen active">
+    <section class="hero">
+
+      <div class="name-wrap">
         <div class="name-shadow">DEFNE</div>
-        <h1>DEFNE</h1>
-        <div class="subtitle">personal archive // character menu</div>
-      </header>
+        <h1 class="name">DEFNE</h1>
+        <div class="identity">psychology student // personal archive</div>
+      </div>
 
-      <div class="section-title">currently</div>
+      <div class="currently-title">currently</div>
 
-      <section class="currently">
-        <div class="status"><span>🏹 archery</span></div>
-        <div class="status"><span>🏋️ cutting</span></div>
-        <div class="status"><span>🎬 watching</span></div>
-        <div class="status"><span>📚 reading</span></div>
+      <!-- BURADAKİ YAZILARI İSTEDİĞİN ZAMAN DEĞİŞTİREBİLİRSİN -->
+
+      <section class="currently-grid">
+        <div class="current-card"><span>🏹 archery</span></div>
+        <div class="current-card"><span>🏋️ cutting</span></div>
+        <div class="current-card"><span>🎬 watching</span></div>
+        <div class="current-card"><span>📚 reading</span></div>
       </section>
 
-      <div class="section-title">select</div>
+      <div class="menu-title">select</div>
 
-      <nav>
-        <button class="menu-button" data-screen="journal">
+      <nav class="menu">
+        <button class="menu-button" data-open="profile">
+          <span>profile</span>
+        </button>
+
+        <button class="menu-button" data-open="journal">
           <span>journal</span>
         </button>
 
-        <button class="menu-button" data-screen="gym">
-          <span>gym</span>
-        </button>
-
-        <button class="menu-button" data-screen="skills">
+        <button class="menu-button" data-open="skills">
           <span>skills</span>
         </button>
 
-        <button class="menu-button" data-screen="films">
-          <span>films</span>
+        <button class="menu-button" data-open="library">
+          <span>library</span>
         </button>
 
-        <button class="menu-button" data-screen="psychology">
+        <button class="menu-button" data-open="psychology">
           <span>psychology</span>
         </button>
 
-        <button class="menu-button" data-screen="gallery">
+        <button class="menu-button" data-open="gallery">
           <span>gallery</span>
         </button>
 
-        <button class="menu-button" data-screen="links">
+        <button class="menu-button" data-open="links">
           <span>links</span>
         </button>
       </nav>
 
-      <footer>
-        <span>cehennets.github.io</span>
-      </footer>
+      <footer>cehennets.github.io</footer>
     </section>
+  </main>
 
-    <!-- JOURNAL -->
+  <!-- PROFILE -->
 
-    <section id="journal" class="screen">
-      <button class="back-button">
-        <span>← ana menü</span>
-      </button>
+  <main id="profile" class="screen">
+    <div class="topbar">
+      <button class="back-button"><span>← ana menü</span></button>
+      <span class="page-number">01 / 07</span>
+    </div>
 
-      <h1 class="page-title">journal</h1>
+    <h1 class="page-title">profile</h1>
 
-      <div class="card-list">
-        <article class="card">
-          <div class="card-content">
-            <div class="tag">24.07.2026</div>
-            <p>siteyi kurmaya başladım</p>
+    <section class="profile-grid">
+      <article class="card">
+        <div class="card-inner">
+          <div class="tag">character data</div>
+
+          <div class="stat">
+            <span>name</span>
+            <span>defne</span>
           </div>
-        </article>
 
-        <article class="card">
-          <div class="card-content">
-            <div class="tag">23.07.2026</div>
-            <p>buraya istediğim şeyleri yazacağım</p>
+          <div class="stat">
+            <span>class</span>
+            <span>psychology student</span>
           </div>
-        </article>
-      </div>
-    </section>
 
-    <!-- GYM -->
-
-    <section id="gym" class="screen">
-      <button class="back-button">
-        <span>← ana menü</span>
-      </button>
-
-      <h1 class="page-title">gym</h1>
-
-      <div class="card-list">
-        <article class="card">
-          <div class="card-content">
-            <div class="tag">current mission</div>
-            <h2>cutting</h2>
-            <p>hedeflerimi, antrenman programımı ve gelişimimi burada tutacağım</p>
+          <div class="stat">
+            <span>location</span>
+            <span>türkiye</span>
           </div>
-        </article>
 
-        <article class="card">
-          <div class="card-content">
-            <h3>weekly training</h3>
-            <p>day 1 — upper</p>
-            <p>day 2 — lower</p>
-            <p>day 3 — upper</p>
-            <p>day 4 — lower</p>
+          <div class="stat">
+            <span>status</span>
+            <span>active</span>
           </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- SKILLS -->
-
-    <section id="skills" class="screen">
-      <button class="back-button">
-        <span>← ana menü</span>
-      </button>
-
-      <h1 class="page-title">skills</h1>
+        </div>
+      </article>
 
       <article class="card">
-        <div class="card-content">
-
-          <div class="skill">
-            <div class="skill-header">
-              <span>archery</span>
-              <span>lv. 4</span>
-            </div>
-            <div class="bar">
-              <div class="bar-fill" style="width: 40%;"></div>
-            </div>
-          </div>
-
-          <div class="skill">
-            <div class="skill-header">
-              <span>fitness</span>
-              <span>lv. 6</span>
-            </div>
-            <div class="bar">
-              <div class="bar-fill" style="width: 60%;"></div>
-            </div>
-          </div>
-
-          <div class="skill">
-            <div class="skill-header">
-              <span>psychology</span>
-              <span>lv. 7</span>
-            </div>
-            <div class="bar">
-              <div class="bar-fill" style="width: 70%;"></div>
-            </div>
-          </div>
-
-          <div class="skill">
-            <div class="skill-header">
-              <span>spss</span>
-              <span>lv. 1</span>
-            </div>
-            <div class="bar">
-              <div class="bar-fill" style="width: 10%;"></div>
-            </div>
-          </div>
-
-          <div class="skill">
-            <div class="skill-header">
-              <span>excel</span>
-              <span>lv. 1</span>
-            </div>
-            <div class="bar">
-              <div class="bar-fill" style="width: 15%;"></div>
-            </div>
-          </div>
-
+        <div class="card-inner">
+          <div class="tag">current objectives</div>
+          <h2>main quests</h2>
+          <p>develop physical skills</p>
+          <p>build a psychology career</p>
+          <p>create things that feel like mine</p>
         </div>
       </article>
     </section>
+  </main>
 
-    <!-- FILMS -->
+  <!-- JOURNAL -->
 
-    <section id="films" class="screen">
-      <button class="back-button">
-        <span>← ana menü</span>
-      </button>
+  <main id="journal" class="screen">
+    <div class="topbar">
+      <button class="back-button"><span>← ana menü</span></button>
+      <span class="page-number">02 / 07</span>
+    </div>
 
-      <h1 class="page-title">films</h1>
+    <h1 class="page-title">journal</h1>
 
-      <div class="film-grid">
-        <article class="film">
-          <span>currently watching</span>
-          <h2>monster</h2>
-        </article>
+    <section class="cards">
 
-        <article class="film">
-          <span>recently watched</span>
-          <h2>film title</h2>
-        </article>
+      <!-- YENİ GÜNLÜK EKLERKEN BU ARTICLE BLOĞUNU KOPYALAYABİLİRSİN -->
 
-        <article class="film">
-          <span>watchlist</span>
-          <h2>perfect blue</h2>
-        </article>
+      <article class="card">
+        <div class="card-inner">
+          <div class="tag date">24.07.2026</div>
+          <h2>siteyi kurmaya başladım</h2>
+          <p>burası benim kişisel arşivim ve dijital üssüm olacak</p>
+        </div>
+      </article>
 
-        <article class="film">
-          <span>watchlist</span>
-          <h2>memories of murder</h2>
-        </article>
-      </div>
+      <article class="card">
+        <div class="card-inner">
+          <div class="tag date">23.07.2026</div>
+          <h2>initializing</h2>
+          <p>yeni bir şey kurma isteği yine kazandı</p>
+        </div>
+      </article>
     </section>
+  </main>
 
-    <!-- PSYCHOLOGY -->
+  <!-- SKILLS -->
 
-    <section id="psychology" class="screen">
-      <button class="back-button">
-        <span>← ana menü</span>
-      </button>
+  <main id="skills" class="screen">
+    <div class="topbar">
+      <button class="back-button"><span>← ana menü</span></button>
+      <span class="page-number">03 / 07</span>
+    </div>
 
-      <h1 class="page-title">psychology</h1>
+    <h1 class="page-title">skills</h1>
 
-      <div class="card-list">
-        <article class="card">
-          <div class="card-content">
-            <div class="tag">area of interest</div>
-            <h2>industrial psychology</h2>
-            <p>notlar, araştırmalar ve kariyer fikirleri</p>
+    <article class="card">
+      <div class="card-inner">
+
+        <div class="skill">
+          <div class="skill-top">
+            <span>archery</span>
+            <span>lv. 04</span>
           </div>
-        </article>
-
-        <article class="card">
-          <div class="card-content">
-            <div class="tag">study archive</div>
-            <h2>university</h2>
-            <p>ders notları, projeler ve öğrendiğim şeyler</p>
+          <div class="bar">
+            <div class="bar-fill" style="width: 40%"></div>
           </div>
-        </article>
+        </div>
 
-        <article class="card">
-          <div class="card-content">
-            <div class="tag">research</div>
-            <h2>topics</h2>
-            <p>ilgimi çeken psikoloji konuları burada olacak</p>
+        <div class="skill">
+          <div class="skill-top">
+            <span>fitness</span>
+            <span>lv. 06</span>
           </div>
-        </article>
+          <div class="bar">
+            <div class="bar-fill" style="width: 60%"></div>
+          </div>
+        </div>
+
+        <div class="skill">
+          <div class="skill-top">
+            <span>psychology</span>
+            <span>lv. 07</span>
+          </div>
+          <div class="bar">
+            <div class="bar-fill" style="width: 70%"></div>
+          </div>
+        </div>
+
+        <div class="skill">
+          <div class="skill-top">
+            <span>spss</span>
+            <span>lv. 01</span>
+          </div>
+          <div class="bar">
+            <div class="bar-fill" style="width: 12%"></div>
+          </div>
+        </div>
+
+        <div class="skill">
+          <div class="skill-top">
+            <span>excel</span>
+            <span>lv. 01</span>
+          </div>
+          <div class="bar">
+            <div class="bar-fill" style="width: 15%"></div>
+          </div>
+        </div>
+
       </div>
+    </article>
+  </main>
+
+  <!-- LIBRARY -->
+
+  <main id="library" class="screen">
+    <div class="topbar">
+      <button class="back-button"><span>← ana menü</span></button>
+      <span class="page-number">04 / 07</span>
+    </div>
+
+    <h1 class="page-title">library</h1>
+
+    <section class="library-grid">
+      <article class="library-item">
+        <small>currently reading</small>
+        <h2>blood meridian</h2>
+      </article>
+
+      <article class="library-item">
+        <small>currently watching</small>
+        <h2>add title</h2>
+      </article>
+
+      <article class="library-item">
+        <small>recent film</small>
+        <h2>add title</h2>
+      </article>
+
+      <article class="library-item">
+        <small>current soundtrack</small>
+        <h2>add title</h2>
+      </article>
     </section>
+  </main>
 
-    <!-- GALLERY -->
+  <!-- PSYCHOLOGY -->
 
-    <section id="gallery" class="screen">
-      <button class="back-button">
-        <span>← ana menü</span>
-      </button>
+  <main id="psychology" class="screen">
+    <div class="topbar">
+      <button class="back-button"><span>← ana menü</span></button>
+      <span class="page-number">05 / 07</span>
+    </div>
 
-      <h1 class="page-title">gallery</h1>
+    <h1 class="page-title">psychology</h1>
 
-      <div class="gallery-grid">
-        <div class="gallery-item">📷</div>
-        <div class="gallery-item">🏹</div>
-        <div class="gallery-item">🎬</div>
-        <div class="gallery-item">🖤</div>
-      </div>
+    <section class="cards">
+      <article class="card">
+        <div class="card-inner">
+          <div class="tag">career</div>
+          <h2>industrial psychology</h2>
+          <p>kariyer seçenekleri, stajlar ve öğrenmek istediğim araçlar</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-inner">
+          <div class="tag">university</div>
+          <h2>study archive</h2>
+          <p>ders notları, araştırmalar ve projeler</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-inner">
+          <div class="tag">interests</div>
+          <h2>research topics</h2>
+          <p>ilgimi çeken teoriler, vakalar ve psikoloji alanları</p>
+        </div>
+      </article>
     </section>
+  </main>
 
-    <!-- LINKS -->
+  <!-- GALLERY -->
 
-    <section id="links" class="screen">
-      <button class="back-button">
-        <span>← ana menü</span>
-      </button>
+  <main id="gallery" class="screen">
+    <div class="topbar">
+      <button class="back-button"><span>← ana menü</span></button>
+      <span class="page-number">06 / 07</span>
+    </div>
 
-      <h1 class="page-title">links</h1>
+    <h1 class="page-title">gallery</h1>
 
-      <div class="link-list">
-        <a class="external-link" href="#" target="_blank">
-          letterboxd
-        </a>
-
-        <a class="external-link" href="#" target="_blank">
-          linkedin
-        </a>
-
-        <a class="external-link" href="#" target="_blank">
-          tumblr
-        </a>
-
-        <a class="external-link" href="#" target="_blank">
-          instagram
-        </a>
-      </div>
+    <section class="gallery-grid">
+      <div class="gallery-item">🏹</div>
+      <div class="gallery-item">📷</div>
+      <div class="gallery-item">🎬</div>
+      <div class="gallery-item">🖤</div>
     </section>
+  </main>
 
+  <!-- LINKS -->
+
+  <main id="links" class="screen">
+    <div class="topbar">
+      <button class="back-button"><span>← ana menü</span></button>
+      <span class="page-number">07 / 07</span>
+    </div>
+
+    <h1 class="page-title">links</h1>
+
+    <section class="links">
+      <!-- # YERİNE KENDİ LİNKLERİNİ YAZACAKSIN -->
+
+      <a class="link" href="#" target="_blank">letterboxd</a>
+      <a class="link" href="#" target="_blank">linkedin</a>
+      <a class="link" href="#" target="_blank">tumblr</a>
+      <a class="link" href="#" target="_blank">instagram</a>
+    </section>
   </main>
 
   <script>
     const screens = document.querySelectorAll(".screen");
-    const menuButtons = document.querySelectorAll("[data-screen]");
+    const openButtons = document.querySelectorAll("[data-open]");
     const backButtons = document.querySelectorAll(".back-button");
 
-    function openScreen(screenId) {
+    function showScreen(id) {
       screens.forEach((screen) => {
         screen.classList.remove("active");
       });
 
-      const selectedScreen = document.getElementById(screenId);
+      const target = document.getElementById(id);
 
-      if (selectedScreen) {
-        selectedScreen.classList.add("active");
+      if (target) {
+        target.classList.add("active");
         window.scrollTo(0, 0);
       }
     }
 
-    menuButtons.forEach((button) => {
+    openButtons.forEach((button) => {
       button.addEventListener("click", () => {
-        openScreen(button.dataset.screen);
+        showScreen(button.dataset.open);
       });
     });
 
     backButtons.forEach((button) => {
       button.addEventListener("click", () => {
-        openScreen("home");
+        showScreen("home");
       });
     });
   </script>
